@@ -7,7 +7,7 @@ This project implements an interval arithmetic library in C++14 for performing m
 
 The program uses a custom `interval` class to represent lower and upper bounds, supporting arithmetic operations, operator overloading, input/output handling and exception management.
 
-A demonstration program is included to test the functionality of the class using different interval values and input conditions.
+A demonstration program and separate automated test suite are included to verify the functionality of the implementation.
 
 ## Features
 
@@ -20,7 +20,7 @@ A demonstration program is included to test the functionality of the class using
 - Custom stream input and output operators
 - Exception handling for division by zero
 - Support for multiple interval input formats
-- Demonstration of arithmetic operations and edge cases
+- Automated tests for arithmetic operations and boundary conditions
 
 ## Project Structure
 
@@ -30,16 +30,22 @@ cpp-interval-arithmetic/
 │   ├── main.cpp
 │   ├── interval.cpp
 │   └── interval.h
+├── tests/
+│   └── test_interval.cpp
 ├── README.md
 ├── .gitignore
 └── LICENSE
 ```
 
+The `src/` directory contains the interval arithmetic implementation and demonstration program.
+
+The `tests/` directory contains automated checks for mathematical operations, constructors, input/output and exception handling.
+
 ## How It Works
 
 ### 1. Interval Representation
 
-The `interval` class represents a range of numerical values using two private variables:
+The `interval` class represents a numerical range using two private variables:
 
 - `min` — lower bound
 - `max` — upper bound
@@ -57,7 +63,7 @@ The second interval is automatically normalised to `[-2, 10]`.
 
 ### 2. Arithmetic Operations
 
-The class implements the four standard arithmetic operations.
+The class implements four standard arithmetic operations.
 
 **Addition**
 
@@ -87,7 +93,7 @@ Division by an interval containing zero raises a `std::domain_error` exception.
 
 ### 3. Operator Overloading
 
-Operator overloading allows intervals to be used with familiar mathematical syntax.
+Operator overloading allows intervals to be manipulated using familiar mathematical syntax.
 
 ```cpp
 interval a(2.0, 5.0);
@@ -108,7 +114,7 @@ interval another = 5.0 + a;
 
 ### 4. Input and Output
 
-The program supports several input formats:
+Custom stream operators support different interval input formats:
 
 ```text
 [1.2, 3.4]
@@ -149,30 +155,64 @@ On Windows:
 .\interval_arithmetic.exe
 ```
 
-The program executes a series of demonstrations before allowing the user to enter an interval interactively.
+The program demonstrates interval construction, arithmetic operations, operator overloading, exception handling and interactive input.
 
 ## Testing
 
-The demonstration program covers:
+The project includes a separate automated test suite containing 14 checks.
 
-1. Default, single-value, two-value and copy constructors
-2. Copy assignment and dynamic array creation
-3. Interval bound normalisation
-4. Arithmetic operations
-5. Compound assignment operators
-6. Arithmetic with scalar values
-7. Stream input and output
-8. Division-by-zero exception handling
-9. Invalid input handling
+### Running the Tests
 
-These examples demonstrate the main functionality and boundary conditions of the implementation.
+Compile the test program from the repository root:
+
+```bash
+g++ -std=c++14 tests/test_interval.cpp src/interval.cpp -o test_interval
+```
+
+Run on Windows:
+
+```powershell
+.\test_interval.exe
+```
+
+Run on Linux or macOS:
+
+```bash
+./test_interval
+```
+
+### Test Coverage
+
+The automated tests cover:
+
+1. Default and single-value constructors
+2. Automatic interval bound normalisation
+3. Addition, subtraction, multiplication and division
+4. Arithmetic involving negative values
+5. Arithmetic between intervals and scalars
+6. Compound assignment operators
+7. Division-by-zero exception handling
+8. Bracketed interval input parsing
+9. Stream output formatting
+
+### Expected Test Output
+
+When all tests pass, the program displays:
+
+```text
+14 passed, 0 failed.
+```
+
+Each test prints `PASS` or `FAIL` along with its description.
+
+The test executable returns a non-zero exit code if any check fails.
 
 ## Limitations
 
 - The implementation uses standard double-precision floating-point arithmetic.
 - Outward rounding is not implemented, so mathematically rigorous interval enclosure is not guaranteed.
 - Operations involving non-finite values are not comprehensively validated.
-- The demonstration program illustrates behaviour but is not a comprehensive automated unit-test suite.
+- The automated tests cover selected operations and edge cases but do not provide exhaustive verification.
 
 ## Skills Demonstrated
 
@@ -180,8 +220,8 @@ These examples demonstrate the main functionality and boundary conditions of the
 - Class design and encapsulation
 - Constructors, destructors and copy semantics
 - Operator overloading
-- Numerical programming
+- Numerical programming and interval arithmetic
 - Exception handling
 - Stream input/output operations
 - Modular software development
-- Software testing and debugging
+- Automated software testing and debugging
